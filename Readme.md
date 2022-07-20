@@ -6,3 +6,4 @@ Sorting Algorithms
 2.Selection Sort
 3.Bubble Sort
 4.Merge Sort
+5.Quick Sort
