@@ -7,3 +7,10 @@ Sorting Algorithms
 3.Bubble Sort
 4.Merge Sort
 5.Quick Sort
+
+
+
+
+
+Data Structures 
+1.Linked List
