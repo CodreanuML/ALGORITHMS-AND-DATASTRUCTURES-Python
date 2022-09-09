@@ -60,6 +60,14 @@ class Queue():
             print(first.value)
             first=first.get_next_node()
             
+    def returnNodes(self):
+        returned_nodes=[]
+        first=self.head
+        while first!=None :
+            returned_nodes.append(first)
+            first=first.get_next_node()
+        return returned_nodes 
+         
     def deque(self):
         if self.is_empty():
             print("Unable to dequeue , queue is empty")
@@ -135,6 +143,10 @@ class Queue_with_priority(Queue):
         else :
             print( "Queue is out of space: max len is %d  %s "   %(self.actual_len,"please dequeue"  ))
     
+
+
+
+
     
 ## Nodes Definition
 First=Node(1)
@@ -188,3 +200,135 @@ New_Queue_p.deque()
 New_Queue_p.enque(Sixth_P)
 
 print(New_Queue_p.traverse())
+
+
+print("################ Warehouse ##################")
+#Creating a manager to handles a Warehouse with 3 shelfs
+
+
+
+class WareHouse():
+    def __init__(self):
+        self.row1=Queue(3)
+        self.row2=Queue(3)
+        self.row3=Queue(3)
+
+        self.rows_no_p=[self.row1,self.row2,self.row3]
+
+        
+    def enque_a_product(self,product):
+        
+        # check if has weight or not to select the row 
+       
+        for row in self.rows_no_p :
+            if row.has_space():
+                row.enque(product)
+                break
+            
+    
+    
+    def deque_a_row_no_prio(self):
+        first_row=self.row1
+        
+        try:  
+            if first_row.head.value != None :
+            
+                while True:
+                    first_row.deque()
+                    try:
+                        first_row.head.get_next_node()
+                    except AttributeError :
+                        break
+        except AttributeError:
+            print("Warehouse empty")
+            
+        second_row=self.row2        
+    
+    
+        try:    
+            if second_row.head.value != None :
+            
+                nodes=second_row.returnNodes()
+                for node in nodes :
+                    self.row1.enque(node)
+                while True:
+                    second_row.deque()
+                    try:
+                        second_row.head.get_next_node()
+                    except AttributeError :
+                        break
+        except AttributeError:
+            pass
+ 
+ 
+        third_row=self.row3        
+    
+    
+        try:    
+            if third_row.head.value != None :
+            
+                nodes=third_row.returnNodes()
+                for node in nodes :
+                    self.row2.enque(node)
+                while True:
+                    third_row.deque()
+                    try:
+                        third_row.head.get_next_node()
+                    except AttributeError :
+                        break
+        except AttributeError:
+            pass
+         
+         
+           
+My_WareH=WareHouse()
+
+Product1=Node(1)
+Product2=Node(2)
+Product3=Node(3)
+Product4=Node(4)
+Product5=Node(5)
+Product6=Node(6)
+Product7=Node(value=7,weight=241)
+Product8=Node(8)
+Product9=Node(9)
+Product10=Node(10)
+Product11=Node(value=11,weight=242)
+Product12=Node(value=12,weight=240)
+Product13=Node(value=13,weight=239)
+My_WareH.enque_a_product(Product1)
+My_WareH.enque_a_product(Product2)
+My_WareH.enque_a_product(Product3)
+My_WareH.enque_a_product(Product4)
+My_WareH.enque_a_product(Product5)
+My_WareH.enque_a_product(Product6)
+My_WareH.enque_a_product(Product7)
+My_WareH.enque_a_product(Product8)
+My_WareH.enque_a_product(Product9)
+My_WareH.enque_a_product(Product10)
+My_WareH.enque_a_product(Product11)
+My_WareH.enque_a_product(Product12)
+My_WareH.enque_a_product(Product13)
+
+
+print("####row1###")
+My_WareH.row1.traverse()
+print("####row2###")
+My_WareH.row2.traverse()
+print("####row3###")
+My_WareH.row3.traverse()
+print("####row4###")
+
+print("################ After Deque ##################")
+
+My_WareH.deque_a_row_no_prio()
+My_WareH.deque_a_row_no_prio()
+My_WareH.deque_a_row_no_prio()
+My_WareH.deque_a_row_no_prio()
+print("####row1###")
+My_WareH.row1.traverse()
+print("####row2###")
+My_WareH.row2.traverse()
+print("####row3###")
+My_WareH.row3.traverse()
+
