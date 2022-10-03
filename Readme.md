@@ -19,3 +19,4 @@ Data Structures
 3.Queue
 4.HashMap
 5.BinaryTree
+6.Heap-MaxHeap
