@@ -1,0 +1,162 @@
+class Heap():
+    
+    def __init__(self):
+        self.heap=[]
+        self.heap.append(None)
+        
+    def __str__(self):
+       
+        return str(self.heap)
+        
+        
+        
+class MaxHeap(Heap):
+    def __init__(self):
+        super().__init__()
+        
+    def get_node_id(self,node):
+        for i in range(0,len(self.heap)):
+            if self.heap[i]==node:
+                
+                return i
+                
+    
+    def get_parent_id(self,node):
+        
+        node_id=self.get_node_id(node)
+        
+        if node_id//2>0 :
+            return node_id//2
+        else:
+            return 0
+        
+        
+    def get_left_child_id(self,node):
+        node_id=self.get_node_id(node)
+        return node_id*2    
+        
+    def get_right_child_id(self,node):
+        node_id=self.get_node_id(node)
+        return node_id*2+1
+        
+    def shiftup(self,node):
+
+        while True:
+            node_id=self.get_node_id(node)
+            if self.get_parent_id(self.heap[node_id]) !=0 :
+                parent_id=self.get_parent_id(self.heap[node_id])   
+            else:
+                break
+            print(node)
+            print(node_id)
+            print(parent_id)
+            print("/")
+            if (self.heap[node_id]>self.heap[parent_id] ):    
+                self.heap[node_id],self.heap[parent_id]=self.heap[parent_id],self.heap[node_id]
+            
+            else:
+                break
+            
+            node=self.heap[parent_id]
+            
+    def shiftdown(self,node):
+        while True:
+            
+            node_id=self.get_node_id(node)
+            if self.has_childrens(node) :
+                left_id=self.get_left_child_id(self.heap[node_id])
+                right_id=self.get_right_child_id(self.heap[node_id])  
+                if self.heap[left_id]>self.heap[right_id]:
+                    great_id=left_id
+                else:
+                    great_id=right_id
+    
+                    
+            elif self.has_only_left_child(node):
+                left_id=self.get_left_child_id(self.heap[node_id])
+                great_id=left_id
+
+            else:
+                break
+            
+            if self.heap[node_id]<self.heap[great_id]:
+                self.heap[node_id],self.heap[great_id]=self.heap[great_id],self.heap[node_id]
+            else:
+                break
+            node=self.heap[great_id]
+            
+            
+    def delete(self,node):        
+        node_id=self.get_node_id(node)
+        last_id=len(self.heap)-1
+        self.heap[node_id],self.heap[last_id]=self.heap[last_id],self.heap[node_id]
+        max_len=len(self.heap)-1
+        self.heap=self.heap[0:max_len]
+        node=self.heap[node_id]
+        self.shiftdown(node)
+        
+        
+    def add(self,node):
+        self.heap.append(node)
+        leng=len(self.heap)-1
+        self.shiftup(node)
+
+
+    def maxim(self):
+        if len(self.heap)>1:
+            return (self.heap[1])
+        else:
+            return ("Heap is empty")
+            
+    
+    def size(self):
+        if len(self.heap)>1:
+            return len(self.heap)
+        else: 
+            return("Heap is empty")
+
+    def has_childrens(self,node):
+        if (self.get_left_child_id(node)<self.size() and self.get_right_child_id(node)<self.size()):
+            return True
+        else :
+            return False
+            
+    def has_only_left_child(self,node):
+        if (self.get_left_child_id(node)<self.size() and self.get_right_child_id(node)>self.size()):
+            return True
+        else :
+            return False    
+        
+        
+LocalHeap=MaxHeap()
+
+print(""""CREATING A MAXHEAP""")
+
+LocalHeap.heap.append(7)
+
+LocalHeap.heap.append(6)
+LocalHeap.heap.append(5)
+LocalHeap.heap.append(4)
+LocalHeap.heap.append(3)
+LocalHeap.heap.append(2)
+LocalHeap.heap.append(1)
+LocalHeap.heap.append(0)
+print(LocalHeap.heap)
+LocalHeap.add(8)
+LocalHeap.add(9)
+print(LocalHeap.heap)
+print(LocalHeap.maxim())
+
+
+a=[12,16,13]
+for i in a :
+    LocalHeap.add(i)
+
+print(LocalHeap.heap)
+print(""""HEAP SORT""")
+while len(LocalHeap.heap)>1:
+    print(LocalHeap.heap[1])
+    try:
+        LocalHeap.delete(LocalHeap.heap[1])
+    except:
+        pass
